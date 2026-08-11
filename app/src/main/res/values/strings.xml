@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SonderRotate</string>
+    <string name="tile_needs_permission">Needs permission</string>
+    <string name="orientation_portrait">Portrait</string>
+    <string name="orientation_landscape">Landscape</string>
+    <string name="orientation_auto">Auto</string>
+
+    <string name="intro">Tap the tile to swap between portrait and landscape without turning your phone.</string>
+
+    <string name="permission_title">Modify system settings</string>
+    <string name="permission_granted">Granted</string>
+    <string name="permission_missing">Required. Tap to grant.</string>
+    <string name="permission_body">Rotation is a system setting, so the app needs permission to change it. Nothing else is used.</string>
+
+    <string name="force_title">Force apps that lock rotation</string>
+    <string name="force_body">Some apps insist on one orientation and ignore the tile. This overrides them, and needs Shizuku.</string>
+    <string name="shizuku_missing">Shizuku is not running</string>
+    <string name="shizuku_needs_permission">Tap to allow Shizuku access</string>
+    <string name="shizuku_ready">Shizuku ready</string>
+
+    <string name="add_tile_title">Add the tile</string>
+    <string name="add_tile_body">Pull down the quick settings panel, edit it, and drag SonderRotate in.</string>
+
+    <string name="current_state">Right now: %1$s</string>
+    <string name="set_auto">Back to auto-rotate</string>
+</resources>

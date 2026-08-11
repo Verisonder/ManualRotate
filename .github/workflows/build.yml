@@ -1,0 +1,47 @@
+# Builds a debug APK on every push and attaches it to the run.
+#
+# There is no Gradle wrapper in this repository, so Gradle is installed by the setup action and
+# invoked directly. That keeps a binary jar out of the repo at the cost of pinning the version here.
+name: Build APK
+
+on:
+  push:
+    branches: [ main, 'test/**' ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+
+      - name: Build debug APK
+        run: |
+          set -o pipefail
+          gradle assembleDebug --no-daemon 2>&1 | tee gradle-build.log
+
+      - name: Record build failure
+        if: failure()
+        run: |
+          echo "--- error index ---"
+          grep -in "e: \|error:\|FAILURE\|Caused by\|Execution failed" gradle-build.log | tail -n 60 || true
+          echo "--- log tail ---"
+          tail -n 80 gradle-build.log
+
+      - name: Upload APK
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: SonderRotate-debug
+          path: app/build/outputs/apk/debug/*.apk
