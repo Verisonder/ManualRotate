@@ -41,17 +41,35 @@ jobs:
 
       # Published as a release rather than left as a run artifact. Artifacts need a GitHub login
       # and arrive as a zip, which is awkward on the phone the app is meant to be installed on.
+      #
+      # Uses a personal token rather than the built-in one, and is skipped entirely when that token
+      # is missing. The built-in token would work with `permissions: contents: write`, but it would
+      # author every release as github-actions[bot], and a release author cannot be changed after
+      # the fact.
       - name: Publish the APK
         if: success()
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.RELEASE_PAT }}
         run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "RELEASE_PAT is not set; the APK is attached to this run instead."
+            exit 0
+          fi
           SHA="$(git rev-parse --short HEAD)"
           SRC="$(ls app/build/outputs/apk/debug/*.apk | head -n 1)"
           cp "$SRC" "ManualRotate-$SHA.apk"
+          # One rolling release rather than one per commit, so the repository page always shows
+          # the newest build and nothing accumulates.
           gh release delete dev --yes --cleanup-tag 2>/dev/null || true
           gh release create dev \
             --title "Latest build $SHA" \
             --notes "Debug build from \`${{ github.ref_name }}\` at \`$SHA\`, $(date -u '+%Y-%m-%d %H:%M UTC')." \
             --prerelease \
             "ManualRotate-$SHA.apk"
+
+      - name: Attach the APK to the run
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ManualRotate-debug
+          path: app/build/outputs/apk/debug/*.apk
