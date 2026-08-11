@@ -55,16 +55,17 @@ jobs:
             echo "RELEASE_PAT is not set; the APK is attached to this run instead."
             exit 0
           fi
-          SHA="$(git rev-parse --short HEAD)"
+          # Named after the app version rather than the commit. A release page is something a
+          # person reads before installing, and a hex string tells them nothing.
+          VERSION="$(grep -o 'versionName = "[^"]*"' app/build.gradle.kts | head -n 1 | cut -d'"' -f2)"
           SRC="$(ls app/build/outputs/apk/debug/*.apk | head -n 1)"
-          cp "$SRC" "ManualRotate-$SHA.apk"
-          # One rolling release rather than one per commit, so the repository page always shows
-          # the newest build and nothing accumulates.
-          gh release delete dev --yes --cleanup-tag 2>/dev/null || true
-          gh release create dev \
-            --title "Latest build $SHA" \
-            --notes "Debug build from \`${{ github.ref_name }}\` at \`$SHA\`, $(date -u '+%Y-%m-%d %H:%M UTC')." \
-            "ManualRotate-$SHA.apk"
+          cp "$SRC" "ManualRotate-$VERSION.apk"
+          gh release delete "v$VERSION" --yes --cleanup-tag 2>/dev/null || true
+          gh release create "v$VERSION" \
+            --title "ManualRotate $VERSION" \
+            --notes "Switch the screen between portrait and landscape from the quick settings panel, without turning your phone." \
+            "ManualRotate-$VERSION.apk"
+          echo "Published v$VERSION"
 
       - name: Attach the APK to the run
         if: success()
