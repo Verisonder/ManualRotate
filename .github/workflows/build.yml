@@ -64,7 +64,6 @@ jobs:
           gh release create dev \
             --title "Latest build $SHA" \
             --notes "Debug build from \`${{ github.ref_name }}\` at \`$SHA\`, $(date -u '+%Y-%m-%d %H:%M UTC')." \
-            --prerelease \
             "ManualRotate-$SHA.apk"
 
       - name: Attach the APK to the run
