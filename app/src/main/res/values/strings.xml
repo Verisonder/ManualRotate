@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SonderRotate</string>
+    <string name="app_name">ManualRotate</string>
     <string name="tile_needs_permission">Needs permission</string>
     <string name="orientation_portrait">Portrait</string>
     <string name="orientation_landscape">Landscape</string>
@@ -20,7 +20,7 @@
     <string name="shizuku_ready">Shizuku ready</string>
 
     <string name="add_tile_title">Add the tile</string>
-    <string name="add_tile_body">Pull down the quick settings panel, edit it, and drag SonderRotate in.</string>
+    <string name="add_tile_body">Pull down the quick settings panel, edit it, and drag ManualRotate in.</string>
 
     <string name="current_state">Right now: %1$s</string>
     <string name="set_auto">Back to auto-rotate</string>

@@ -18,7 +18,7 @@
         android:icon="@drawable/ic_launcher_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SonderRotate">
+        android:theme="@style/Theme.ManualRotate">
 
         <activity
             android:name=".MainActivity"

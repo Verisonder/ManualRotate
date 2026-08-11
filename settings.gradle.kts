@@ -4,5 +4,5 @@ pluginManagement {
 dependencyResolutionManagement {
     repositories { google(); mavenCentral() }
 }
-rootProject.name = "SonderRotate"
+rootProject.name = "ManualRotate"
 include(":app")

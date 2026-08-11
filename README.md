@@ -1,4 +1,4 @@
-# SonderRotate
+# ManualRotate
 
 A quick settings tile that switches the screen between portrait and landscape without turning your phone.
 

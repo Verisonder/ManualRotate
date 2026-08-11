@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.verisonder.sonderrotate"
+    namespace = "com.verisonder.manualrotate"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.verisonder.sonderrotate"
+        applicationId = "com.verisonder.manualrotate"
         // TileService arrived in 24, and the whole app is a tile.
         minSdk = 24
         targetSdk = 35

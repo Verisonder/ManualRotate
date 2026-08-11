@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-only
-package com.verisonder.sonderrotate
+package com.verisonder.manualrotate
 
 import android.content.Context
 import android.provider.Settings

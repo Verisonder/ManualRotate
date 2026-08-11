@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
-package com.verisonder.sonderrotate
+package com.verisonder.manualrotate
 
 import android.content.Context
 
 /** The single stored option. Off by default: Shizuku is an extra, not a requirement. */
 object Preferences {
-    private const val FILE = "sonderrotate"
+    private const val FILE = "manualrotate"
     private const val KEY_FORCE_APPS = "force_apps"
 
     private fun prefs(context: Context) =
