@@ -39,9 +39,19 @@ jobs:
           echo "--- log tail ---"
           tail -n 80 gradle-build.log
 
-      - name: Upload APK
+      # Published as a release rather than left as a run artifact. Artifacts need a GitHub login
+      # and arrive as a zip, which is awkward on the phone the app is meant to be installed on.
+      - name: Publish the APK
         if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ManualRotate-debug
-          path: app/build/outputs/apk/debug/*.apk
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SHA="$(git rev-parse --short HEAD)"
+          SRC="$(ls app/build/outputs/apk/debug/*.apk | head -n 1)"
+          cp "$SRC" "ManualRotate-$SHA.apk"
+          gh release delete dev --yes --cleanup-tag 2>/dev/null || true
+          gh release create dev \
+            --title "Latest build $SHA" \
+            --notes "Debug build from \`${{ github.ref_name }}\` at \`$SHA\`, $(date -u '+%Y-%m-%d %H:%M UTC')." \
+            --prerelease \
+            "ManualRotate-$SHA.apk"
